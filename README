@@ -1,0 +1,19 @@
+npm i typescript @types/node (integração do node com o typescript) -D (para não ir pra produção, só ficar no ambiente de desenvolvimento)
+npx tsc --init para criar o arquivo de typescript
+npm i tsx -D (para converter de ts pra js)
+
+npm run tsx watch src/server.ts pra executar e escutar as mudanças no código
+
+Framework -- fastify (mais usada no mercado, por enquanto)
+
+Prisma pro bd
+
+npx prisma init --datasource-provider SQLite
+
+npx prisma studio (abre uma página na web mostrando o bd)
+
+npx prisma migrate dev (compara o arquivo com o que já tem no bd e atualiza)
+
+npm i fastify-type-provider-zod pra validação usando zod e já sincronizado com o fastify
+
+npm i nodemailer (pro envio de email)
