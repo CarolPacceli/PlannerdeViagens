@@ -15,6 +15,8 @@ import { getTrip } from "./routes/get-trip";
 import { getParticipant } from "./routes/get-participant";
 import { errorHandler } from "./error-handler";
 import { env } from "./env";
+import { createUser } from "./routes/create-user";
+import { login } from "./routes/login";
 
 
 
@@ -46,6 +48,9 @@ app.register(getActivity)
 
 app.register(createLink)
 app.register(getLinks)
+
+app.register(createUser)
+app.register(login)
 
 app.listen({port: env.PORT}).then(() => {
     console.log("It's on")

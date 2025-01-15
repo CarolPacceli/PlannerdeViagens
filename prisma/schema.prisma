@@ -23,7 +23,6 @@ model Trip {
 }
 
 model Participant {
-  id           String  @id @default(uuid())
   name         String?
   email        String?
   is_confirmed Boolean @default(false)
@@ -31,6 +30,8 @@ model Participant {
 
   trip    Trip   @relation(fields: [trip_id], references: [id])
   trip_id String
+  user    User   @relation(fields: [id], references: [id])
+  id      String @id @unique
 
   @@map("participants")
 }
@@ -55,4 +56,14 @@ model Link {
   trip_id String
 
   @@map("links")
+}
+
+model User {
+  id          String       @id @default(uuid())
+  name        String
+  email       String
+  password    String
+  Participant Participant?
+
+  @@map("user")
 }
