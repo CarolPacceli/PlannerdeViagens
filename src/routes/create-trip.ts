@@ -9,14 +9,14 @@ import { dayjs } from "../lib/dayjs";
 import { ClientError } from "../errors/client-erros";
 import { env } from "../env";
 
-
-
 export async function createTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     "/trips",
     {
       schema: {
         body: z.object({
+          title: z.string(),
+          description: z.string(),
           destination: z.string().min(4),
           starts_at: z.coerce.date(),
           ends_at: z.coerce.date(),
@@ -28,6 +28,8 @@ export async function createTrip(app: FastifyInstance) {
     },
     async (request: any) => {
       const {
+        title,
+        description,
         destination,
         starts_at,
         ends_at,
@@ -48,6 +50,8 @@ export async function createTrip(app: FastifyInstance) {
           destination,
           starts_at,
           ends_at,
+          description,
+          title,
           participants: {
             createMany: {
               data: [
@@ -65,10 +69,10 @@ export async function createTrip(app: FastifyInstance) {
           },
         },
       });
-      const starts_at_formatted = dayjs(starts_at).format('LL')
-      const ends_at_formatted = dayjs(ends_at).format('LL')
+      const starts_at_formatted = dayjs(starts_at).format("LL");
+      const ends_at_formatted = dayjs(ends_at).format("LL");
 
-      const confirmationLink = `${env.API_BASE_URL}/trips/${trip.id}/confirm`
+      const confirmationLink = `${env.API_BASE_URL}/trips/${trip.id}/confirm`;
 
       const mail = await getMailClient();
 
@@ -100,9 +104,9 @@ export async function createTrip(app: FastifyInstance) {
           desconsiderar.
         </p>
       </div>
-      `.trim()
+      `.trim(),
       });
-      
+
       console.log(nodemailer.getTestMessageUrl(message));
 
       return { tripId: trip.id };
