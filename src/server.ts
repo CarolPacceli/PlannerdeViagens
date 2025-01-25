@@ -18,6 +18,8 @@ import { env } from "./env";
 import { createUser } from "./routes/create-user";
 import { login } from "./routes/login";
 import { getAllUserTrips } from "./routes/get-all-user-trips";
+import { updateUser } from "./routes/update-user";
+import { forgotPassword } from "./routes/forgot-password";
 
 
 
@@ -51,7 +53,9 @@ app.register(getActivity)
 app.register(createLink)
 app.register(getLinks)
 
+app.register(forgotPassword)
 app.register(createUser)
+app.register(updateUser)
 app.register(login)
 
 app.listen({port: env.PORT}).then(() => {

@@ -4,42 +4,48 @@ import { z } from "zod";
 import { ClientError } from "../errors/client-erros";
 import { prisma } from "../lib/prisma";
 
-export async function login(app: FastifyInstance) {
+export async function forgotPassword(app: FastifyInstance) {
   try{
-    app.withTypeProvider<ZodTypeProvider>().post(
-      "/user/login",
+    app.withTypeProvider<ZodTypeProvider>().put(
+      "/user/password",
       {
         schema: {
         //   params: z.object({
         //     user_id: z.string().uuid()
         //   }),
           body: z.object({
-            email: z.string().email(),
-            password: z.string(),
+              email: z.string().email(),
+              password: z.string(),
           })
         },
       },
       async (request: any, reply: any) => {
-        // const { trip_id } = request.params;
         const { email, password } = request.body;
-        const user = await prisma.user.findFirst({
-            select:{
-              
-              name: true,
-              email: true,
-              password: true,
+        const user_req = await prisma.user.findFirst({
+            where:{
+                email: email
+            }
+        })
+        if(user_req && user_req.id){
+        const user = await prisma.user.update({
+            where:{
+                id: user_req.id
             },
-            where: {
-              email: email,
-              password: password
+            data:{
+                password: password,
+                
             },
           });
           if (!user) {
+            throw new ClientError("Could not change password.");
+          }
+        }
+          else {
             throw new ClientError("User not found.");
           }
   
       
-        return { name: user.name };
+        return {message: 'OK'};
       }
     );
 
