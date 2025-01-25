@@ -17,6 +17,7 @@ import { errorHandler } from "./error-handler";
 import { env } from "./env";
 import { createUser } from "./routes/create-user";
 import { login } from "./routes/login";
+import { getAllUserTrips } from "./routes/get-all-user-trips";
 
 
 
@@ -35,6 +36,7 @@ app.register(createTrip)
 app.register(confirmTrip)
 app.register(updateTrip)
 app.register(getTrip)
+app.register(getAllUserTrips)
 
 
 app.register(confirmParticipant)

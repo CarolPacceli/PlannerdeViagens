@@ -44,7 +44,7 @@ export async function createTrip(app: FastifyInstance) {
       if (dayjs(starts_at).isAfter(ends_at)) {
         throw new ClientError("Invalid trip end date");
       }
-
+      
       const trip = await prisma.trip.create({
         data: {
           destination,
@@ -56,6 +56,7 @@ export async function createTrip(app: FastifyInstance) {
             createMany: {
               data: [
                 {
+                  
                   name: owner_name,
                   email: owner_email,
                   is_owner: true,
