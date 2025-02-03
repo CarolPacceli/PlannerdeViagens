@@ -16,7 +16,7 @@ export async function createActivity(app: FastifyInstance) {
           }),
           body: z.object({
             title: z.string(),
-            ocurs_at: z.coerce.date(),
+            ocurs_at: z.string(),
           })
         },
       },
@@ -34,13 +34,13 @@ export async function createActivity(app: FastifyInstance) {
           throw new ClientError("Trip not found.")
         }
   
-        if (dayjs(ocurs_at).isBefore(trip.starts_at)) {
-          throw new ClientError("Invalid activity date");
-        }
+        // if (dayjs(ocurs_at).isBefore(trip.starts_at)) {
+        //   throw new ClientError("Invalid activity date");
+        // }
   
-        if (dayjs(ocurs_at).isAfter(trip.ends_at)) {
-          throw new ClientError("Invalid activity date");
-        }
+        // if (dayjs(ocurs_at).isAfter(trip.ends_at)) {
+        //   throw new ClientError("Invalid activity date");
+        // }
   
         const activity = await prisma.activity.create({
           data: { 
